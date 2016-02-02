@@ -1,0 +1,7 @@
+{
+    "file_formats": {
+        "query": ["tpch_.*"],
+        "schema": [ "(?<scale>tiny)" ],
+        "session": {}
+    }
+}
