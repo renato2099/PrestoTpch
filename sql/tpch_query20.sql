@@ -1,32 +1,32 @@
 select
-	s.name,
-	s.address
+	s_name,
+	s_address
 from
 	supplier s,
 	nation n,
 	(select
-		suppkey
+		ps_suppkey
 	from
 		(select
-				ps.suppkey,
-				ps.availqty,
+				ps_suppkey,
+				ps_availqty,
 				sum_quantity
 			from
 				partsupp ps, 
-				(select distinct p.partkey from part p where p.name like 'forest%')q20_tmp1_cached, 
-				(select l.partkey, l.suppkey, 0.5 * sum(l.quantity) as sum_quantity
+				(select distinct p_partkey from part p where p_name like 'forest%')q20_tmp1_cached, 
+				(select l_partkey, l_suppkey, 0.5 * sum(l_quantity) as sum_quantity
 				from lineitem l
-				where l.shipdate >= date '1994-01-01' and l.shipdate < date '1995-01-01'
-				group by l.partkey, l.suppkey)q20_tmp2_cached
+				where l_shipdate >= date '1994-01-01' and l_shipdate < date '1995-01-01'
+				group by l_partkey, l_suppkey)q20_tmp2_cached
 			where
-				ps.partkey = q20_tmp1_cached.partkey
-				and ps.partkey = q20_tmp2_cached.partkey
-				and ps.suppkey = q20_tmp2_cached.suppkey)q20_tmp3_cached
+				ps_partkey = q20_tmp1_cached.p_partkey
+				and ps_partkey = q20_tmp2_cached.l_partkey
+				and ps_suppkey = q20_tmp2_cached.l_suppkey)q20_tmp3_cached
 	where
-		availqty > sum_quantity
-	group by suppkey)q20_tmp4_cached
+		ps_availqty > sum_quantity
+	group by ps_suppkey)q20_tmp4_cached
 where
-	s.nationkey = n.nationkey
-	and n.name = 'CANADA'
-	and s.suppkey = q20_tmp4_cached.suppkey
-order by s.name
+	s_nationkey = n_nationkey
+	and n_name = 'CANADA'
+	and s_suppkey = q20_tmp4_cached.ps_suppkey
+order by s_name

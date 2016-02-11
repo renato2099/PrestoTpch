@@ -1,29 +1,29 @@
 select
- s.acctbal,
- s.name,
- n.name,
- p.partkey,
- p.mfgr,
- s.address,
- s.phone,
- s.comment
+ s_acctbal,
+ s_name,
+ n_name,
+ p_partkey,
+ p_mfgr,
+ s_address,
+ s_phone,
+ s_comment
 from 
-(select * from part p where p.size = 37 and p.type like '%COPPER') p
-inner join partsupp ps on p.partkey = ps.partkey
-inner join supplier s on s.suppkey = ps.suppkey 
+(select * from part p where p_size = 37 and p_type like '%COPPER') p
+inner join partsupp ps on p_partkey = ps_partkey
+inner join supplier s on s_suppkey = ps_suppkey 
 inner join (
-    select p.partkey as min_p_partkey, min(ps.supplycost) as min_ps_supplycost from part p
-    inner join partsupp ps on p.partkey = ps.partkey 
-    inner join supplier s on s.suppkey = ps.suppkey 
-    inner join nation n on s.nationkey = n.nationkey 
-    inner join region r on n.regionkey = r.regionkey and r.name = 'EUROPE'
-    group by p.partkey
-)A on ps.supplycost = A.min_ps_supplycost and p.partkey =A.min_p_partkey
-inner join nation n on s.nationkey = n.nationkey 
-inner join region r on n.regionkey = r.regionkey  and r.name = 'EUROPE'
+    select p_partkey as min_p_partkey, min(ps_supplycost) as min_ps_supplycost from part p
+    inner join partsupp ps on p_partkey = ps_partkey 
+    inner join supplier s on s_suppkey = ps_suppkey 
+    inner join nation n on s_nationkey = n_nationkey 
+    inner join region r on n_regionkey = r_regionkey and r_name = 'EUROPE'
+    group by p_partkey
+)A on ps_supplycost = A.min_ps_supplycost and p_partkey =A.min_p_partkey
+inner join nation n on s_nationkey = n_nationkey 
+inner join region r on n_regionkey = r_regionkey  and r_name = 'EUROPE'
 order by
-	s.acctbal desc,
-	n.name,
-	s.name,
-	p.partkey
+	s_acctbal desc,
+	n_name,
+	s_name,
+	p_partkey
 limit 100

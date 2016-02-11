@@ -1,6 +1,6 @@
 select
-	n.name,
-	sum(l.extendedprice * (1 - l.discount)) as revenue
+	n_name,
+	sum(l_extendedprice * (1 - l_discount)) as revenue
 from
 	customer c,
 	orders o,
@@ -9,16 +9,16 @@ from
 	nation n,
 	region r
 where
-	c.custkey = o.custkey
-	and l.orderkey = o.orderkey
-	and l.suppkey = s.suppkey
-	and c.nationkey = s.nationkey
-	and s.nationkey = n.nationkey
-	and n.regionkey = r.regionkey
-	and r.name = 'AFRICA'
-	and o.orderdate >= date '1993-01-01'
-	and o.orderdate < date '1994-01-01'
+	c_custkey = o_custkey
+	and l_orderkey = o_orderkey
+	and l_suppkey = s_suppkey
+	and c_nationkey = s_nationkey
+	and s_nationkey = n_nationkey
+	and n_regionkey = r_regionkey
+	and r_name = 'AFRICA'
+	and o_orderdate >= date '1993-01-01'
+	and o_orderdate < date '1994-01-01'
 group by
-	n.name
+	n_name
 order by
 	revenue desc

@@ -1,30 +1,30 @@
 select
-	p.brand,
-	p.type,
-	p.size,
-	count(distinct ps.suppkey) as supplier_cnt
+	p_brand,
+	p_type,
+	p_size,
+	count(distinct ps_suppkey) as supplier_cnt
 from
 	partsupp ps,
 	part p
 where
-	p.partkey = ps.partkey
-	and p.brand <> 'Brand#34'
-	and p.type not like 'ECONOMY BRUSHED%'
-	and p.size in (22, 14, 27, 49, 21, 33, 35, 28)
-	and ps.suppkey not in (
+	p_partkey = ps_partkey
+	and p_brand <> 'Brand#34'
+	and p_type not like 'ECONOMY BRUSHED%'
+	and p_size in (22, 14, 27, 49, 21, 33, 35, 28)
+	and ps_suppkey not in (
 		select
-			s.suppkey
+			s_suppkey
 		from
 			supplier s
 		where
-			s.comment like '%Customer%Complaints%'
+			s_comment like '%Customer%Complaints%'
 	)
 group by
-	p.brand,
-	p.type,
-	p.size
+	p_brand,
+	p_type,
+	p_size
 order by
 	supplier_cnt desc,
-	p.brand,
-	p.type,
-	p.size
+	p_brand,
+	p_type,
+	p_size

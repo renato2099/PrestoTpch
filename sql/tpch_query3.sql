@@ -1,23 +1,23 @@
 select
-	l.orderkey,
-	sum(l.extendedprice * (1 - l.discount)) as revenue,
-	o.orderdate,
-	o.shippriority
+	l_orderkey,
+	sum(l_extendedprice * (1 - l_discount)) as revenue,
+	o_orderdate,
+	o_shippriority
 from
 	customer c,
 	orders o,
 	lineitem l
 where
-	c.mktsegment = 'BUILDING'
-	and c.custkey = o.custkey
-	and l.orderkey = o.orderkey
-	and o.orderdate < date '1995-03-22'
-	and l.shipdate > date '1995-03-22'
+	c_mktsegment = 'BUILDING'
+	and c_custkey = o_custkey
+	and l_orderkey = o_orderkey
+	and o_orderdate < date '1995-03-22'
+	and l_shipdate > date '1995-03-22'
 group by
-	l.orderkey,
-	o.orderdate,
-	o.shippriority
+	l_orderkey,
+	o_orderdate,
+	o_shippriority
 order by
 	revenue desc,
-	o.orderdate
+	o_orderdate
 limit 10

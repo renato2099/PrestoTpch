@@ -6,10 +6,10 @@ select
 from
 	(
 		select
-			n1.name as supp_nation,
-			n2.name as cust_nation,
-			year(l.shipdate) as l_year,
-			l.extendedprice * (1 - l.discount) as volume
+			n1.n_name as supp_nation,
+			n2.n_name as cust_nation,
+			year(l_shipdate) as l_year,
+			l_extendedprice * (1 - l_discount) as volume
 		from
 			supplier s,
 			lineitem l,
@@ -18,16 +18,16 @@ from
 			nation n1,
 			nation n2
 		where
-			s.suppkey = l.suppkey
-			and o.orderkey = l.orderkey
-			and c.custkey = o.custkey
-			and s.nationkey = n1.nationkey
-			and c.nationkey = n2.nationkey
+			s_suppkey = l_suppkey
+			and o_orderkey = l_orderkey
+			and c_custkey = o_custkey
+			and s_nationkey = n1.n_nationkey
+			and c_nationkey = n2.n_nationkey
 			and (
-				(n1.name = 'KENYA' and n2.name = 'PERU')
-				or (n1.name = 'PERU' and n2.name = 'KENYA')
+				(n1.n_name = 'KENYA' and n2.n_name = 'PERU')
+				or (n1.n_name = 'PERU' and n2.n_name = 'KENYA')
 			)
-			and l.shipdate between date '1995-01-01' and date '1996-12-31'
+			and l_shipdate between date '1995-01-01' and date '1996-12-31'
 	) as shipping
 group by
 	supp_nation,
