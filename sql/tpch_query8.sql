@@ -1,37 +1,30 @@
 select
-	o_year,
-	sum(case
-		when nation = 'PERU' then volume
-		else 0
-	end) / sum(volume) as mkt_share
+        o_year,
+        sum(case
+                when nation = 'PERU' then volume
+                else 0
+        end) / sum(volume) as mkt_share
 from
-	(
-		select
-			year(o.orderdate) as o_year,
-			l.extendedprice * (1 - l.discount) as volume,
-			n2.name as nation
-		from
-			part p,
-			supplier s,
-			lineitem l,
-			orders o,
-			customer c,
-			nation n1,
-			nation n2,
-			region r
-		where
-			p.partkey = l.partkey
-			and s.suppkey = l.suppkey
-			and l.orderkey = o.orderkey
-			and o.custkey = c.custkey
-			and c.nationkey = n1.nationkey
-			and n1.regionkey = r.regionkey
-			and r.name = 'AMERICA'
-			and s.nationkey = n2.nationkey
-			and o.orderdate between date '1995-01-01' and date '1996-12-31'
-			and p.type = 'ECONOMY BURNISHED NICKEL'
-	) as all_nations
+        (
+                select
+                        year(o.orderdate) as o_year,
+                        l.extendedprice * (1 - l.discount) as volume,
+                        n2.name as nation
+                from
+                        (select * from orders o where o.orderdate between date '1995-01-01' and date '1996-12-31')o
+                        inner join (
+                                    select * from customer c 
+                                    where c.nationkey IN (
+                                        select n1.nationkey from nation n1 
+                                        inner join (select * from region r where r.name = 'AMERICA')r on n1.regionkey = r.regionkey)
+                                    )c on c.custkey = o.custkey
+                        inner join lineitem l on l.orderkey = o.orderkey
+                        inner join (select * from part p where p.type = 'ECONOMY BURNISHED NICKEL' )p on p.partkey = l.partkey
+                        inner join supplier s on s.suppkey = l.suppkey
+                        inner join nation n2 on s.nationkey = n2.nationkey
+        ) as all_nations
 group by
-	o_year
+        o_year
 order by
-	o_year
+        o_year
+
