@@ -5,8 +5,8 @@ from
 	orders as o,
     lineitem l
 where
-	o_orderdate >= date '1996-05-01'
-	and o_orderdate < date '1996-08-01'
+	o_orderdate >= date '1993-07-01'
+	and o_orderdate <  date '1993-07-01' + interval '3' month
 	and l_orderkey = o_orderkey
 	and l_commitdate < l_receiptdate
 group by

@@ -16,7 +16,7 @@ from
 				(select distinct p_partkey from part p where p_name like 'forest%')q20_tmp1_cached, 
 				(select l_partkey, l_suppkey, 0.5 * sum(l_quantity) as sum_quantity
 				from lineitem l
-				where l_shipdate >= date '1994-01-01' and l_shipdate < date '1995-01-01'
+				where l_shipdate >= date '1994-01-01' and l_shipdate < date '1994-01-01' + interval '1' year
 				group by l_partkey, l_suppkey)q20_tmp2_cached
 			where
 				ps_partkey = q20_tmp1_cached.p_partkey

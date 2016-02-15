@@ -13,7 +13,7 @@ from
 		lineitem l
 	where
 		l_shipdate >= date '1996-01-01'
-		and l_shipdate < date '1996-04-01'
+		and l_shipdate < date '1996-01-01' + interval '3' month
 	group by l_suppkey)revenue_cached,
 	(select
 		max(total_revenue) as max_revenue
@@ -25,7 +25,7 @@ from
 		lineitem l
 	where
 		l_shipdate >= date '1996-01-01'
-		and l_shipdate < date '1996-04-01'
+		and l_shipdate < date '1996-01-01' + interval '3' month
 	group by l_suppkey))max_revenue_cached
 where
 	s_suppkey = supplier_no

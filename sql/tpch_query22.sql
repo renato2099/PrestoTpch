@@ -18,13 +18,7 @@ from (
 				from
 					customer c
 				where
-					substr(c_phone, 1, 2) = '13' or
-					substr(c_phone, 1, 2) = '31' or
-					substr(c_phone, 1, 2) = '23' or
-					substr(c_phone, 1, 2) = '29' or
-					substr(c_phone, 1, 2) = '30' or
-					substr(c_phone, 1, 2) = '18' or
-					substr(c_phone, 1, 2) = '17')
+					substr(c_phone, 1, 2) IN ('13', '31', '23', '29', '30', '18', '17'))
 		) ct1 
 		cross join (
 			select
@@ -39,13 +33,7 @@ from (
 								from
 									customer c
 								where
-									substr(c_phone, 1, 2) = '13' or
-									substr(c_phone, 1, 2) = '31' or
-									substr(c_phone, 1, 2) = '23' or
-									substr(c_phone, 1, 2) = '29' or
-									substr(c_phone, 1, 2) = '30' or
-									substr(c_phone, 1, 2) = '18' or
-									substr(c_phone, 1, 2) = '17') ct
+									substr(c_phone, 1, 2) IN ('13', '31', '23', '29', '30', '18', '17')) ct
 			on ct.c_custkey = ot.o_custkey
 			where ot.o_custkey is null
 		) ct2

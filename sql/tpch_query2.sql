@@ -8,7 +8,7 @@ select
  s_phone,
  s_comment
 from 
-(select * from part p where p_size = 37 and p_type like '%COPPER') p
+(select * from part p where p_size = 37 and p_type like '%BRASS') p
 inner join partsupp ps on p_partkey = ps_partkey
 inner join supplier s on s_suppkey = ps_suppkey 
 inner join (

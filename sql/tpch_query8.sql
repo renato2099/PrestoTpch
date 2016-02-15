@@ -1,7 +1,7 @@
 select
         o_year,
         sum(case
-                when nation = 'PERU' then volume
+                when nation = 'BRAZIL' then volume
                 else 0
         end) / sum(volume) as mkt_share
 from
@@ -19,7 +19,7 @@ from
                                         inner join (select * from region r where r_name = 'AMERICA')r on n1.n_regionkey = r_regionkey)
                                     )c on c_custkey = o_custkey
                         inner join lineitem l on l_orderkey = o_orderkey
-                        inner join (select * from part p where p_type = 'ECONOMY BURNISHED NICKEL' )p on p_partkey = l_partkey
+                        inner join (select * from part p where p_type = 'ECONOMY ANODIZED STEEL' )p on p_partkey = l_partkey
                         inner join supplier s on s_suppkey = l_suppkey
                         inner join nation n2 on s_nationkey = n2.n_nationkey
         ) as all_nations

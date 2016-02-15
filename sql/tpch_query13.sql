@@ -9,7 +9,7 @@ from
 		from
 			customer c left outer join orders o on
 				c_custkey = o_custkey
-			where o_comment not like '%unusual%accounts%'
+			where o_comment not like '%special%requests%'
 		group by
 			c_custkey
 	) c_orders
