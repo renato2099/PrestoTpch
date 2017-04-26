@@ -114,3 +114,4 @@ create external table part (
     INPUTFORMAT "parquet.hive.DeprecatedParquetInputFormat"
     OUTPUTFORMAT "parquet.hive.DeprecatedParquetOutputFormat"
     LOCATION '/tpch_data/orders.parquet';
+
