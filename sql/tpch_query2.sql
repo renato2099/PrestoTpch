@@ -27,3 +27,4 @@ order by
 	s_name,
 	p_partkey
 limit 100
+;
